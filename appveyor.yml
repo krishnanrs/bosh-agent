@@ -13,6 +13,9 @@ install:
   - go version
   - go env
   - go install ./vendor/github.com/onsi/ginkgo/ginkgo
+  - ps: if($env:build_compiler -eq 'mingw' -and $env:build_platform -eq 'x64') {
+      invoke 'curl' '-L -o mw64.7z "http://libgd.blob.core.windows.net/mingw/x86_64-4.9.1-release-posix-seh-rt_v3-rev1.7z"';
+      invoke '7z' 'x -oC:\ mw64.7z'; }
 
 build_script:
   - ginkgo -trace -skipPackage="integration,vendor" -r
