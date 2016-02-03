@@ -9,6 +9,7 @@ install:
   - set PATH=C:\MinGW\bin;%PATH%
   - echo %PATH%
   - echo %GOPATH%
+  - dir C:\
   - go version
   - go env
   - go install ./vendor/github.com/onsi/ginkgo/ginkgo
