@@ -1,0 +1,22 @@
+clone_folder: c:\gopath\src\github.com\cloudfoundry\bosh-agent
+
+environment:
+  GOPATH: c:\gopath
+  GO15VENDOREXPERIMENT: 1
+
+install:
+  - set PATH=%GOPATH%\bin;%PATH%
+  - set PATH=C:\MinGW\bin;%PATH%
+  - echo %PATH%
+  - echo %GOPATH%
+  - go version
+  - go env
+  - go install ./vendor/github.com/onsi/ginkgo/ginkgo
+
+build_script:
+  - ginkgo -trace -skipPackage="integration,vendor" -r
+
+branches:
+  only:
+  - master
+  - /appveyor/
