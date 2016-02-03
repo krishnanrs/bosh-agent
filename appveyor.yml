@@ -5,9 +5,9 @@ environment:
   GO15VENDOREXPERIMENT: 1
 
 install:
-  - ps: if($env:build_compiler -eq 'mingw' -and $env:build_platform -eq 'x64') {
+  - ps:
       invoke 'curl' '-L -o mw64.7z "http://libgd.blob.core.windows.net/mingw/x86_64-4.9.1-release-posix-seh-rt_v3-rev1.7z"';
-      invoke '7z' 'x -oC:\ mw64.7z'; }
+      invoke '7z' 'x -oC:\ mw64.7z';
   - set PATH=%GOPATH%\bin;%PATH%
   - set PATH=C:\mingw64\bin;%PATH%
   - dir C:\
