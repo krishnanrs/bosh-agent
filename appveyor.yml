@@ -10,7 +10,7 @@ install:
       invoke '7z' 'x -oC:\ mw64.7z'; }
   - set PATH=%GOPATH%\bin;%PATH%
   - set PATH=C:\mingw64\bin;%PATH%
-  - dir C:\mingw64\bin
+  - dir C:\
   - echo %PATH%
   - echo %GOPATH%
   - go version
