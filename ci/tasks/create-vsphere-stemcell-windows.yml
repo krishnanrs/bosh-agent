@@ -4,22 +4,22 @@ platform: linux
 image: docker:///bosh/init
 
 inputs:
-- name: bosh-vsphere-stemcell-version
+  - name: bosh-vsphere-stemcell-version
 - name: bosh-agent-zip
 - name: bosh-agent-deps-zip
 - name: bosh-agent
   path: gopath/src/github.com/cloudfoundry/bosh-agent
 - name: ovftool-linux
 
-outputs:
-- name: vagrant_home
+  outputs:
+    - name: vagrant_home
 - name: bosh-vsphere-stemcell
 
-run:
-  path: gopath/src/github.com/cloudfoundry/bosh-agent/ci/tasks/create-vsphere-stemcell-windows.sh
+  run:
+    path: gopath/src/github.com/cloudfoundry/bosh-agent/ci/tasks/create-vsphere-stemcell-windows.sh
 
-params:
-  RESOURCE_POOL_NAME: replace-me
+  params:
+    RESOURCE_POOL_NAME: replace-me
   TEMPLATE_NAME: replace-me
   VCENTER_PASSWORD: replace-me
   VCENTER_USERNAME: replace-me
