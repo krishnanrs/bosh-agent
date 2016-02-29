@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	boshalert "github.com/cloudfoundry/bosh-agent/agent/alert"
 	boshdirs "github.com/cloudfoundry/bosh-agent/settings/directories"
 	bosherr "github.com/cloudfoundry/bosh-utils/errors"
 	boshlog "github.com/cloudfoundry/bosh-utils/logger"
@@ -322,6 +323,19 @@ func (s *windowsJobSupervisor) RemoveAllJobs() error {
 }
 
 func (s *windowsJobSupervisor) MonitorJobFailures(handler JobFailureHandler) error {
+	go func() {
+		for {
+			handler(boshalert.MonitAlert{
+				Action:      "stuff",
+				Date:        "date",
+				Event:       "execution failed",
+				ID:          "id",
+				Service:     "service",
+				Description: "description",
+			})
+			time.Sleep(time.Second)
+		}
+	}()
 	return nil
 }
 
