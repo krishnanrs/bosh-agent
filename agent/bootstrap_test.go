@@ -500,7 +500,7 @@ func init() {
 
 				devicePathResolver := devicepathresolver.NewIdentityDevicePathResolver()
 
-				routesSearcher := boshnet.NewCmdRoutesSearcher(runner)
+				routesSearcher := boshnet.NewRoutesSearcher(runner)
 				defaultNetworkResolver = boshnet.NewDefaultNetworkResolver(routesSearcher, ipResolver)
 				state, err := boshplatform.NewBootstrapState(fs, "/tmp/agent_state.json")
 				Expect(err).NotTo(HaveOccurred())

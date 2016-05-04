@@ -77,8 +77,8 @@ func NewProvider(logger boshlog.Logger, dirProvider boshdirs.Provider, statsColl
 	centosCertManager := boshcert.NewCentOSCertManager(fs, runner, 0, logger)
 	ubuntuCertManager := boshcert.NewUbuntuCertManager(fs, runner, 60, logger)
 
-	routesSearcher := boshnet.NewCmdRoutesSearcher(runner)
-	linuxDefaultNetworkResolver := boshnet.NewDefaultNetworkResolver(routesSearcher, ipResolver)
+	routesSearcher := boshnet.NewRoutesSearcher(runner)
+	defaultNetworkResolver := boshnet.NewDefaultNetworkResolver(routesSearcher, ipResolver)
 
 	monitRetryable := NewMonitRetryable(runner)
 	monitRetryStrategy := boshretry.NewAttemptRetryStrategy(10, 1*time.Second, monitRetryable, logger)
@@ -116,7 +116,7 @@ func NewProvider(logger boshlog.Logger, dirProvider boshdirs.Provider, statsColl
 		bootstrapState,
 		options.Linux,
 		logger,
-		linuxDefaultNetworkResolver,
+		defaultNetworkResolver,
 	)
 
 	ubuntu := NewLinuxPlatform(
@@ -137,7 +137,18 @@ func NewProvider(logger boshlog.Logger, dirProvider boshdirs.Provider, statsColl
 		bootstrapState,
 		options.Linux,
 		logger,
-		linuxDefaultNetworkResolver,
+		defaultNetworkResolver,
+	)
+
+	windows := NewWindowsPlatform(
+		statsCollector,
+		fs,
+		runner,
+		dirProvider,
+		windowsNetManager,
+		devicePathResolver,
+		logger,
+		defaultNetworkResolver,
 	)
 
 	return provider{
@@ -145,7 +156,7 @@ func NewProvider(logger boshlog.Logger, dirProvider boshdirs.Provider, statsColl
 			"ubuntu":  ubuntu,
 			"centos":  centos,
 			"dummy":   NewDummyPlatform(statsCollector, fs, runner, dirProvider, devicePathResolver, logger),
-			"windows": NewWindowsPlatform(statsCollector, fs, runner, dirProvider, windowsNetManager, devicePathResolver, logger),
+			"windows": windows,
 		},
 	}
 }
